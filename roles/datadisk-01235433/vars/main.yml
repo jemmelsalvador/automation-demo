@@ -1,0 +1,10 @@
+---
+# vars file for datadisk-01235433
+datadisk: /dev/sdc
+labelname: gpt
+fstype1: xfs
+fstype2: ext4
+mountpt1: /part1
+mountpt2: /part2
+disk1size: 4GiB
+disk2size: 5GiB

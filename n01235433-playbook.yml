@@ -1,0 +1,7 @@
+- name: Main Playbook
+  hosts: "{{target_hosts}}"
+  roles:
+    - datadisk-01235433
+    - profile-01235433
+    - user-01235433
+    - webserver-01235433

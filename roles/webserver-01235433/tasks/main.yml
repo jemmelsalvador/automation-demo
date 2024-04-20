@@ -1,0 +1,24 @@
+---
+# tasks file for webserver-01235433
+- name: Install webserver
+  yum:
+    name: "{{package}}"
+    state: present
+- name: Create and add content to html files
+  lineinfile:
+    path: "/home/cutbreak9/jemmel-n01235433/automation/ansible/project1-01235433/roles/webserver-01235433/files/{{ansible_facts['hostname'][12:]}}.html" # String manipulation to extract file name from hostname
+    line: "<h1>{{ansible_facts['fqdn']}}</h1>"
+    insertafter: EOF
+    create: true
+    backup: true
+    state: present
+  delegate_to: localhost
+- name: Copy html files
+  copy:
+    src: "{{ansible_facts['hostname'][12:]}}.html" # String manipulation to extract file name from hostname
+    dest: "{{target}}/index.html"
+- name: Set file permissions
+  file:
+    path: "{{target}}/index.html"
+    mode: "{{htmlfile_permissions}}"
+  notify: start_httpd

@@ -1,0 +1,7 @@
+---
+# handlers file for webserver-01235433
+- name: start_httpd
+  systemd:
+    name: "{{package}}"
+    enabled: true
+    state: started

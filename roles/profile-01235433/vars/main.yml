@@ -1,0 +1,6 @@
+---
+# vars file for profile-01235433
+filepath: /etc/profile
+content: |
+  #Test block added by Ansible……n01235433
+  export TMOUT=1500

@@ -1,0 +1,37 @@
+---
+# tasks file for user-01235433
+- name: "Create {{custom_groupname}} group"
+  group:
+    name: "{{custom_groupname}}"
+    state: present
+- name: Create users 100 to 300
+  user:
+    name: "{{username_prefix}}{{item}}{{username_suffix}}"
+    state: present
+  with_sequence: 1-3
+- name: "Add users to {{custom_groupname}} and wheel groups"
+  user:
+    name: "{{username_prefix}}{{item}}{{username_suffix}}"
+    append: yes
+    groups: "{{grouplist}}"
+    state: present
+  with_sequence: 1-3
+- name: Generate SSH keys
+  user:
+    name: "{{username_prefix}}{{item}}{{username_suffix}}"
+    generate_ssh_key: true
+    force: true
+    state: present
+  with_sequence: 1-3
+- name: Import SSH keys
+  fetch:
+    src: "/home/{{username_prefix}}{{item}}{{username_suffix}}/.ssh/id_rsa.pub"
+    dest: "~/id_rsa_{{item}}.pub"
+    flat: true
+  with_sequence: 1-3
+- name: Distribute SSH keys
+  authorized_key:
+    user: "{{username_prefix}}{{item}}{{username_suffix}}"
+    key: "{{lookup('file','~/id_rsa_{{item}}.pub')}}"
+    state: present
+  with_sequence: 1-3

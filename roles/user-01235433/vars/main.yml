@@ -1,0 +1,8 @@
+---
+# vars file for user-01235433
+username_prefix: user
+username_suffix: "00"
+custom_groupname: cloudadmins
+grouplist:
+  - "{{custom_groupname}}"
+  - wheel

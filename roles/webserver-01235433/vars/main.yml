@@ -1,0 +1,5 @@
+---
+# vars file for webserver-01235433
+package: httpd
+target: /var/www/html
+htmlfile_permissions: 0444

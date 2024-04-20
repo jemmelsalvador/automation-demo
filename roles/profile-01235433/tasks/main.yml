@@ -1,0 +1,9 @@
+---
+# tasks file for profile-01235433
+- name: Write to file
+  blockinfile:
+    path: "{{filepath}}"
+    block: "{{content}}"
+    insertafter: EOF
+    backup: yes
+    state: present

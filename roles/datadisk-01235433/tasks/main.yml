@@ -1,0 +1,46 @@
+---
+# tasks file for datadisk-01235433
+- name: "Create {{disk1size}} partition"
+  parted:
+    device: "{{datadisk}}"
+    number: 1
+    part_end: "{{disk1size}}"
+    fs_type: "{{fstype1}}"
+    label: "{{labelname}}"
+    state: present
+- name: "Format {{disk1size}} partition"
+  filesystem:
+    fstype: "{{fstype1}}"
+    dev: "{{datadisk}}1"
+- name: "Create mount point {{mountpt1}}"
+  file:
+    path: "{{mountpt1}}"
+    state: directory
+- name: "Mount {{disk1size}} partition to {{mountpt1}}"
+  mount:
+    src: "{{datadisk}}1"
+    path: "{{mountpt1}}"
+    fstype: "{{fstype1}}"
+    state: mounted
+- name: "Create {{disk2size}} partition"
+  parted:
+    device: "{{datadisk}}"
+    number: 2
+    part_start: "-{{disk2size}}"
+    fs_type: "{{fstype2}}"
+    label: "{{labelname}}"
+    state: present
+- name: "Format {{disk2size}} partition"
+  filesystem:
+    fstype: "{{fstype2}}"
+    dev: "{{datadisk}}2"
+- name: "Create mount point {{mountpt2}}"
+  file:
+    path: "{{mountpt2}}"
+    state: directory
+- name: "Mount {{disk2size}} partition to {{mountpt2}}"
+  mount:
+    src: "{{datadisk}}2"
+    path: "{{mountpt2}}"
+    fstype: "{{fstype2}}"
+    state: mounted
